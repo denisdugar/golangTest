@@ -1,87 +1,43 @@
 package sort
 
-import("testing"
+import (
 	"reflect"
 	"sort"
+	"testing"
 )
 
-func TestSortT(t *testing.T){
+var testCases = []struct {
+	name     string
+	actual   []int
+	expected []int
+}{
+	{actual: []int{5, 7, 3, 8, 1, 9, 0, 2, 5, 10}, expected: []int{0, 1, 2, 3, 5, 5, 7, 8, 9, 10}, name: "simple sort slice"},
+	{actual: []int{1, 1, 1, 1, 1, 1, 1, 1}, expected: []int{1, 1, 1, 1, 1, 1, 1, 1}, name: "sort equal"},
+	{actual: []int{1}, expected: []int{1}, name: "sort one"},
+	{actual: []int{}, expected: []int{}, name: "sort empty"},
+	{name: "sort nil"},
+	{actual: []int{1, 2, 3, 4, 5}, expected: []int{1, 2, 3, 4, 5}, name: "sort sorted slice"},
+}
 
-	arr1 := []int{5,7,3,8,1,9,0,2,5,10}
-	arrSort1 := []int{0,1,2,3,5,5,7,8,9,10}
-	
-	arr2 := []int{1,1,1,1,1,1,1,1}
-	arrSort2 := []int{1,1,1,1,1,1,1,1}
-	
-	arr3 := []int{1}
-	arrSort3 := []int{1}
-	
-	arr4 := []int{}
-	arrSort4 := []int{}
-	var arrSortMy []int
-	var arrSortGo []int
-	
-	//сортировка моей функцией
-	arrSortMy = SortT(arr1)
+func TestSortMy(t *testing.T) {
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			SortT(tt.actual)
+			if !reflect.DeepEqual(tt.actual, tt.expected) {
+				t.Errorf("got %q, want %q", tt.actual, tt.expected)
+			}
 
-	//сортировка встроенной
-	sort.Ints(arr1)
-	arrSortGo = arr1
-	
-
-	//сравнение и проверка
-	if !(reflect.DeepEqual(arrSortMy, arrSort1)){
-		t.Errorf("got %q, want %q", arrSortMy, arrSort1)
+		})
 	}
-	if !(reflect.DeepEqual(arrSortGo, arrSort1)){
-		t.Errorf("got %q, want %q", arrSortGo, arrSort1)
-	}
+}
+func TestSortGo(t *testing.T) {
+	for _, tt := range testCases {
+		t.Run("TestSortGo", func(t *testing.T) {
+			sort.Ints(tt.actual)
 
-	//сортировка моей функцией
-	arrSortMy = SortT(arr2)
-
-	//сортировка встроенной
-	sort.Ints(arr2)
-	arrSortGo = arr2
-	
-
-	//сравнение и проверка
-	if !(reflect.DeepEqual(arrSortMy, arrSort2)){
-		t.Errorf("got %q, want %q", arrSortMy, arrSort2)
-	}
-	if !(reflect.DeepEqual(arrSortGo, arrSort2)){
-		t.Errorf("got %q, want %q", arrSortGo, arrSort2)
-	}
-
-	//сортировка моей функцией
-	arrSortMy = SortT(arr3)
-
-	//сортировка встроенной
-	sort.Ints(arr3)
-	arrSortGo = arr3
-	
-
-	//сравнение и проверка
-	if !(reflect.DeepEqual(arrSortMy, arrSort3)){
-		t.Errorf("got %q, want %q", arrSortMy, arrSort3)
-	}
-	if !(reflect.DeepEqual(arrSortGo, arrSort3)){
-		t.Errorf("got %q, want %q", arrSortGo, arrSort3)
-	}
-
-	//сортировка моей функцией
-	arrSortMy = SortT(arr4)
-
-	//сортировка встроенной
-	sort.Ints(arr4)
-	arrSortGo = arr4
-	
-
-	//сравнение и проверка
-	if !(reflect.DeepEqual(arrSortMy, arrSort4)){
-		t.Errorf("got %q, want %q", arrSortMy, arrSort4)
-	}
-	if !(reflect.DeepEqual(arrSortGo, arrSort4)){
-		t.Errorf("got %q, want %q", arrSortGo, arrSort4)
+			if !reflect.DeepEqual(tt.actual, tt.expected) {
+				t.Errorf("got %q, want %q", tt.actual, tt.expected)
+			}
+		})
 	}
 }
