@@ -1,8 +1,17 @@
 package numtoword
 
-func NumToWord(num string) string {
+import (
+	"errors"
+	"strconv"
+)
+
+func NumToWord(num string) (string, error) {
 
 	var result string
+
+	if len(num) == 0 {
+		return num, nil
+	}
 
 	units := map[string]string{"0": "ноль", "1": "один", "2": "два", "3": "три", "4": "четыре", "5": "пять",
 		"6": "шесть", "7": "семь", "8": "восемь", "9": "девять", "10": "десять", "11": "одинадцать", "12": "двенадцать",
@@ -16,11 +25,14 @@ func NumToWord(num string) string {
 		"6": "шестьсот", "7": "семьсот", "8": "восемьсот", "9": "девятьсот"}
 
 	if len(num) > 0 {
-		if num[:1] == "-" {
-			return "число не входит в диапазон 0-999"
+		if num[0] == '-' {
+			return "", errors.New("число не входит в диапазон 0-999")
 		}
 	}
 
+	if _, err := strconv.ParseInt(num, 10, 64); err != nil {
+		return "", errors.New("это не число")
+	}
 	if len(num) == 1 {
 		result = units[num]
 	}
@@ -47,7 +59,7 @@ func NumToWord(num string) string {
 		}
 	}
 	if len(num) > 3 {
-		result = "число не входит в диапазон 0-999"
+		return "", errors.New("число не входит в диапазон 0-999")
 	}
-	return result
+	return result, nil
 }

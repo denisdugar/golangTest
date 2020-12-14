@@ -1,12 +1,20 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"projects/day1/day3/numtoword"
-	"strings"
 )
+
+func CloseFileError(f io.Closer, name string) {
+	err := f.Close()
+	if err != nil {
+		log.Println("Error open file %s (err: %v", name, err)
+	}
+}
 
 func main() {
 	file, err := os.Open("nums.txt")
@@ -15,30 +23,29 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	defer file.Close()
+	defer CloseFileError(file, "nums.txt")
 
-	var s string
-	data := make([]byte, 64)
-
-	for {
-		n, err := file.Read(data)
-		if err == io.EOF {
-			break
-		}
-		s = s + string(data[:n])
+	var s []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		s = append(s, scanner.Text())
 	}
-	num := strings.Fields(s)
 
-	file1, err1 := os.Create("text.txt")
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
 
-	if err1 != nil {
-		fmt.Println("Unable to create file:", err1)
+	file1, err := os.Create("text.txt")
+
+	if err != nil {
+		fmt.Println("Unable to create file:", err)
 		os.Exit(1)
 	}
-	defer file1.Close()
+	defer CloseFileError(file1, "text.txt")
 
-	for i := 0; i < len(num); i++ {
-		file1.WriteString(numtoword.NumToWord(num[i]))
+	for i := 0; i < len(s); i++ {
+		word, _ := numtoword.NumToWord(s[i])
+		file1.WriteString(word)
 		file1.WriteString("\n")
 	}
 }

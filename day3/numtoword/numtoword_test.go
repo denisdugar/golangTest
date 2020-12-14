@@ -22,17 +22,18 @@ var testCases = []struct {
 	{actual: "112", expected: "сто двенадцать", name: "112"},
 	{actual: "120", expected: "сто двадцать", name: "120"},
 	{actual: "999", expected: "девятьсот девяносто девять", name: "999"},
-	{actual: "1000", expected: "число не входит в диапазон 0-999", name: "1000"},
-	{actual: "-11", expected: "число не входит в диапазон 0-999", name: "-11"},
-	{actual: "-111", expected: "число не входит в диапазон 0-999", name: "-111"},
-	{actual: "-1", expected: "число не входит в диапазон 0-999", name: "-1"},
+	{actual: "1000", expected: "", name: "1000"},
+	{actual: "-11", expected: "", name: "-11"},
+	{actual: "-111", expected: "", name: "-111"},
+	{actual: "-1", expected: "", name: "-1"},
+	{actual: "qqq", expected: "", name: "qqq"},
 	{name: "nill!"},
 }
 
 func TestFuncNumToWord(t *testing.T) {
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
-			s := NumToWord(tt.actual)
+			s, _ := NumToWord(tt.actual)
 			if !reflect.DeepEqual(s, tt.expected) {
 				t.Errorf("got %q, want %q", s, tt.expected)
 			}
