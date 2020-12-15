@@ -1,5 +1,9 @@
 package triangle
 
+import (
+	"math"
+)
+
 type Triangle struct {
 	A float64
 	B float64
@@ -7,7 +11,8 @@ type Triangle struct {
 }
 
 func (t Triangle) Area() float64 {
-	return (t.A * t.B) / 2
+	p := (t.A + t.B + t.C) / 2
+	return math.Sqrt(p * (p - t.A) * (p - t.B) * (p - t.C))
 }
 
 func NewTriangle(a, b, c float64) Triangle {
@@ -19,8 +24,5 @@ func NewTriangle(a, b, c float64) Triangle {
 }
 
 func (t Triangle) IsValid() bool {
-	if t.A != 0 && t.B != 0 && t.C != 0 {
-		return true
-	}
-	return false
+	return t.A > 0 && t.B > 0 && t.C > 0
 }

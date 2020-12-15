@@ -9,10 +9,7 @@ func (c Circle) Area() float64 {
 }
 
 func (c Circle) IsValid() bool {
-	if c.R != 0 {
-		return true
-	}
-	return false
+	return c.R > 0
 }
 
 func NewCircle(r float64) Circle {

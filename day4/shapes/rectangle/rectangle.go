@@ -10,10 +10,7 @@ func (r Rectangle) Area() float64 {
 }
 
 func (r Rectangle) IsValid() bool {
-	if r.A != 0 && r.B != 0 {
-		return true
-	}
-	return false
+	return r.A > 0 && r.B > 0
 }
 
 func NewRectangle(a, b float64) Rectangle {
