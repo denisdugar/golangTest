@@ -24,5 +24,5 @@ func NewTriangle(a, b, c float64) Triangle {
 }
 
 func (t Triangle) IsValid() bool {
-	return t.A > 0 && t.B > 0 && t.C > 0
+	return t.A+t.B > t.C && t.A+t.C > t.B && t.B+t.C > t.A
 }

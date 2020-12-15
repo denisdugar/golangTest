@@ -1,11 +1,13 @@
 package circle
 
+import "math"
+
 type Circle struct {
 	R float64
 }
 
 func (c Circle) Area() float64 {
-	return c.R * c.R * 3.14
+	return c.R * c.R * math.Pi
 }
 
 func (c Circle) IsValid() bool {

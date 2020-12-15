@@ -1,6 +1,7 @@
 package calculatesuare
 
 import (
+	"math"
 	"testing"
 )
 
@@ -10,7 +11,7 @@ var testCases = []struct {
 	expected float64
 	er       string
 }{
-	{actual: []string{"wqe", "1"}, expected: 3.14, name: "circle"},
+	{actual: []string{"wqe", "1"}, expected: math.Pi, name: "circle"},
 	{actual: []string{"wqe", "1", "2"}, expected: 2, name: "rectangle"},
 	{actual: []string{"wqe", "3", "4", "5"}, expected: 6, name: "triangle"},
 	{actual: []string{"wqe"}, expected: 0, er: "no arguments", name: "no arguments"},
@@ -20,7 +21,8 @@ var testCases = []struct {
 	{actual: []string{"wqe", "0", "0", "0"}, expected: 0, er: "one side no valid", name: "triangle all sides 0"},
 	{actual: []string{"wqe", ""}, expected: 0, er: "one side no valid", name: "one emty argument"},
 	{actual: []string{"wqe", "-1"}, expected: 0, er: "one side no valid", name: "-1"},
-	{actual: []string{"wqe", "2", "2", "5"}, expected: 0, er: "impossible triangle", name: "impossible triangle"},
+	{actual: []string{"wqe", "2", "2", "5"}, expected: 0, er: "one side no valid", name: "impossible triangle"},
+	{actual: []string{"wqe", "2", "2", "5", "1", "1"}, expected: 0, er: "too many arguments", name: "5 arguments"},
 }
 
 func TestCalculateSuare(t *testing.T) {

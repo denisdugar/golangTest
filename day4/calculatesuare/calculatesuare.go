@@ -2,7 +2,6 @@ package calculatesuare
 
 import (
 	"errors"
-	"math"
 	"projects/day1/day4/shapes/circle"
 	"projects/day1/day4/shapes/rectangle"
 	"projects/day1/day4/shapes/triangle"
@@ -17,7 +16,6 @@ type MyShapes interface {
 func CalculateSuare(args []string) (float64, error) {
 	var sh MyShapes
 	noArg := errors.New("no arguments")
-	//noValid := errors.New("no valid")
 	noValidSide := errors.New("one side no valid")
 
 	if len(args) < 2 {
@@ -48,10 +46,12 @@ func CalculateSuare(args []string) (float64, error) {
 		sh = triangle.NewTriangle(a, b, c)
 	}
 
+	if len(args) > 4 {
+		return 0, errors.New("too many arguments")
+	}
+
 	if sh.IsValid() && sh.Area() > 0 {
 		return sh.Area(), nil
-	} else if math.IsNaN(sh.Area()) {
-		return 0, errors.New("impossible triangle")
 	}
 	return 0, noValidSide
 }
